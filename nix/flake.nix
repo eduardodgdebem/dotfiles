@@ -29,6 +29,9 @@
 
       homebrew = {
       	enable = true;
+        brews = [
+          "git-lfs"
+        ];
         casks = [
           "arc"
           "ghostty"
