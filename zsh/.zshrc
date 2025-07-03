@@ -32,3 +32,12 @@ export HOMEBREW_PREFIX=$(brew --prefix)  # Explicitly set Homebrew prefix
 kindle_ip="192.168.100.174"
 
 export PATH="$PATH:/Users/eduardogdebem/.dotnet/tools"
+
+alias sbrew='~/Projects/dotfiles/brew/brew_install.sh'
+
+_brew_install_completions() {
+  local -a commands=("install" "sync" "u_list")
+  _describe 'sbrew commands' commands
+}
+
+compdef _brew_install_completions brew_install.sh sbrew
