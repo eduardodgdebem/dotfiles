@@ -11,6 +11,8 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
   let
     configuration = { pkgs, config, ... }: {
+      nixpkgs.config = { allowBroken = true; allowUnfree = true; };
+
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
@@ -21,6 +23,9 @@
           pkgs.starship
           pkgs.mkalias
           pkgs.btop
+          pkgs.go
+          pkgs.pnpm
+          pkgs.fzf
         ];
 
       # fonts.packages = [
@@ -31,13 +36,16 @@
       	enable = true;
         brews = [
           "git-lfs"
+          "nvm"
         ];
         casks = [
-          "arc"
           "ghostty"
           "the-unarchiver"
           "font-jetbrains-mono"
           "spotify"
+          "visual-studio-code"
+          "google-chrome"
+          "brave-browser"
           "visual-studio-code"
         ];
         onActivation.cleanup = "zap";
@@ -98,13 +106,13 @@
     darwinConfigurations."Eduardos-MacBook-Air" = nix-darwin.lib.darwinSystem {
       modules = [ 
         configuration
-	nix-homebrew.darwinModules.nix-homebrew
-	{
+        nix-homebrew.darwinModules.nix-homebrew
+        {
           nix-homebrew = {
             enable = true;
             enableRosetta = true;
-	    user = "eduardogdebem";
-	    autoMigrate = true;
+            user = "eduardogdebem";
+            autoMigrate = true;
           };
         }
       ];
