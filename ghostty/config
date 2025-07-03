@@ -1,6 +1,6 @@
 background = 000000
 background-opacity = 0.8
-background-blur = 50
+background-blur = 30
 
 window-padding-x = 10
 window-padding-y = 10
@@ -11,3 +11,5 @@ theme = PaulMillr
 
 macos-titlebar-style = tabs
 window-save-state = always
+
+adjust-cursor-thickness = 5 
