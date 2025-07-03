@@ -29,7 +29,6 @@ export HOMEBREW_PREFIX=$(brew --prefix)  # Explicitly set Homebrew prefix
 # Load NVM bash_completion
 [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"
 
-kindle_ip="192.168.100.174"
 
 export PATH="$PATH:/Users/eduardogdebem/.dotnet/tools"
 
@@ -41,3 +40,7 @@ _brew_install_completions() {
 }
 
 compdef _brew_install_completions brew_install.sh sbrew
+
+if [ -f "$HOME/.zsh_local" ] && [ -x "$HOME/.zsh_local" ]; then
+    "$HOME/.zsh_local"
+fi
