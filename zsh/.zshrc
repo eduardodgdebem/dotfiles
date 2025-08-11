@@ -5,6 +5,7 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$PATH:/Users/eduardogdebem/.dotnet/tools"
 export NVM_DIR="$HOME/.nvm"
 export HOMEBREW_PREFIX=$(brew --prefix) # Explicitly set Homebrew prefix
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # ------------------------------------------------------------------------------
 # Aliases
@@ -60,3 +61,6 @@ compdef _brew_install_completions brew_install.sh sbrew
 if [ -f "$HOME/.zsh_local" ] && [ -x "$HOME/.zsh_local" ]; then
     "$HOME/.zsh_local"
 fi
+
+# Run Fastfetch
+fastfetch
