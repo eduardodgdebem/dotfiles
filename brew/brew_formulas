@@ -1,4 +1,5 @@
 btop
+cmake
 fastfetch
 fzf
 git-lfs
@@ -9,4 +10,3 @@ pnpm
 python@3.13
 starship
 tmux
-cmake
