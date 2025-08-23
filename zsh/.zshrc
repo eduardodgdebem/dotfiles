@@ -14,6 +14,8 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias sbrew='~/Projects/dotfiles/brew/brew_install.sh'
+alias c="c++ -std=c++26"
+alias vim="nvim"
 
 # ------------------------------------------------------------------------------
 # Color Settings
@@ -56,6 +58,14 @@ _brew_install_completions() {
 compdef _brew_install_completions brew_install.sh sbrew
 
 # ------------------------------------------------------------------------------
+# Custom Functions 
+# ------------------------------------------------------------------------------
+
+cr() {
+  c $@ -o a.out && ./a.out
+}
+
+# ------------------------------------------------------------------------------
 # Local Settings
 # ------------------------------------------------------------------------------
 if [ -f "$HOME/.zsh_local" ] && [ -x "$HOME/.zsh_local" ]; then
@@ -64,3 +74,5 @@ fi
 
 # Run Fastfetch
 fastfetch
+
+
