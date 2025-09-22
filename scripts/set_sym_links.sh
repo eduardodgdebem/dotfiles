@@ -26,7 +26,7 @@ safe_symlink() {
   fi
 
   mkdir -p "$(dirname "$target")"
-  ln -s "$source" "$target"
+  sudo ln -s "$source" "$target"
   echo "✅ Created symlink: $target → $source"
 }
 
@@ -39,8 +39,14 @@ safe_symlink "$SCRIPT_DIR/../zsh/.zshrc" "$HOME/.zshrc"
 safe_symlink "$SCRIPT_DIR/../wallpapers" "$HOME/Pictures/wallpapers"
 
 # Symlink Ghostty config
-GHOSTTY_DIR="$HOME/Library/Application\ Support/com.mitchellh.ghostty/config"
-safe_symlink "$SCRIPT_DIR/../ghostty" "$GHOSTTY_DIR/config"
+GHOSTTY_DIR="$HOME/Library/Application Support/com.mitchellh.ghostty"
+safe_symlink "$SCRIPT_DIR/../ghostty/config" "$GHOSTTY_DIR/config"
 
 # Symlink fastfetch
 safe_symlink "$SCRIPT_DIR/../fastfetch" "$HOME/.config/fastfetch"
+
+# Symlink nvim
+safe_symlink "$SCRIPT_DIR/../nvim" "$HOME/.config/nvim"
+
+# Symlink tmux
+safe_symlink "$SCRIPT_DIR/../tmux" "$HOME/.config/tmux"

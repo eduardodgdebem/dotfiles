@@ -1,5 +1,5 @@
 background = 000000
-background-opacity = 0.7
+background-opacity = 0.85
 background-blur = 30
 
 window-padding-x = 10
@@ -8,8 +8,6 @@ fullscreen = false
 maximize = true
 
 font-family = JetBrains Mono
-
-theme = PaulMillr
 
 macos-titlebar-style = tabs
 window-save-state = always
