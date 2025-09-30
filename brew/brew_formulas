@@ -1,12 +1,16 @@
 btop
 cmake
+cocoapods
+codex
 fastfetch
 fzf
+gemini-cli
 git-lfs
 go
+llvm
 neovim
 nvm
 pnpm
-python@3.13
 starship
 tmux
+zoxide

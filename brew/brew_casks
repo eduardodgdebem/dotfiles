@@ -1,6 +1,6 @@
+android-studio
 azure-data-studio
 brave-browser
-docker
 docker-desktop
 dotnet-sdk
 font-jetbrains-mono
@@ -10,5 +10,7 @@ google-chrome
 insomnia
 rider
 spotify
+stats
+steam
 the-unarchiver
 visual-studio-code
