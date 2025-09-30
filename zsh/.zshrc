@@ -15,7 +15,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias sbrew='~/Projects/dotfiles/brew/brew_install.sh'
 alias c="c++ -std=c++26"
-alias vim="nvim"
 
 # ------------------------------------------------------------------------------
 # Color Settings
@@ -42,10 +41,24 @@ fi
 # Load NVM bash_completion
 [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"
 
+# pnpm
+export PNPM_HOME="/Users/eduardogdebem/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+#
 # ------------------------------------------------------------------------------
-# Starship Prompt
+# Init tools
 # ------------------------------------------------------------------------------
 eval "$(starship init zsh)"
+
+eval "$(zoxide init zsh)"
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
 # ------------------------------------------------------------------------------
 # Custom Completions
@@ -65,6 +78,16 @@ cr() {
   c $@ -o a.out && ./a.out
 }
 
+gl() {
+  local num="10"
+
+  if [ -n "$1" ]; then
+    num="$1"
+  fi
+
+  git --no-pager log --oneline -n "$num"
+}
+
 # ------------------------------------------------------------------------------
 # Local Settings
 # ------------------------------------------------------------------------------
@@ -77,15 +100,3 @@ fastfetch
 
 
 
-# pnpm
-export PNPM_HOME="/Users/eduardogdebem/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
