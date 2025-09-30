@@ -6,3 +6,10 @@ require("onedarkpro").setup({
 })
 
 vim.cmd("colorscheme onedark_dark")
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.md",
+  callback = function()
+    vim.opt_local.spell = false
+  end,
+})
