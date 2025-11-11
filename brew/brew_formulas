@@ -9,8 +9,11 @@ git-lfs
 go
 llvm
 neovim
+nmap
 nvm
 pnpm
+raylib
 starship
 tmux
+tree
 zoxide

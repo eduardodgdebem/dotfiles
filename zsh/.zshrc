@@ -6,6 +6,7 @@ export PATH="$PATH:/Users/eduardogdebem/.dotnet/tools"
 export NVM_DIR="$HOME/.nvm"
 export HOMEBREW_PREFIX=$(brew --prefix) # Explicitly set Homebrew prefix
 export XDG_CONFIG_HOME="$HOME/.config"
+export PATH="/Users/eduardogoulartdebem/Projects/clang/c++/ode/build:$PATH"
 
 # ------------------------------------------------------------------------------
 # Aliases
