@@ -1,61 +1,73 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Auto-completion for script arguments
-_brew_installer_completions() {
-  local cur="${COMP_WORDS[COMP_CWORD]}"
-  COMPREPLY=($(compgen -W "install sync u_list" -- "$cur"))
-}
-
-# Register completion function
-complete -F _brew_installer_completions ./brew_installer.sh
+BREWFILE="$SCRIPT_DIR/Brewfile"
 
 input=$1
 
 if [ -z "$input" ]; then
-  echo "Usage: $0 [install|sync|u_list]"
+  echo "Usage: $0 [install|sync|update|cleanup]"
+  echo ""
+  echo "Commands:"
+  echo "  install  - Install all packages from Brewfile"
+  echo "  sync     - Install from Brewfile and remove unlisted packages"
+  echo "  update   - Update Brewfile with currently installed packages"
+  echo "  cleanup  - Remove packages not in Brewfile"
   exit 1
 fi
 
-install_from_list() {
-  echo "Installing missing formulas..."
-  comm -23 <(sort "$SCRIPT_DIR/brew_formulas") <(brew leaves | sort) | xargs brew install
-
-  echo "Installing missing casks..."
-  comm -23 <(sort "$SCRIPT_DIR/brew_casks") <(brew list --cask | sort) | xargs brew install --cask
+check_brewfile() {
+  if [ ! -f "$BREWFILE" ]; then
+    echo "Error: Brewfile not found at $BREWFILE"
+    echo "Run '$0 update' to create one from your current installations."
+    exit 1
+  fi
 }
 
-remove_unsynced_package() {
-  echo "Removing unsynced formulas..."
-  comm -23 <(brew leaves | sort) <(sort "$SCRIPT_DIR/brew_formulas") | xargs brew uninstall --force
-  echo "Removing unsynced casks..."
-  comm -23 <(brew list --cask | sort) <(sort "$SCRIPT_DIR/brew_casks") | xargs brew uninstall --cask --force
+install_from_brewfile() {
+  check_brewfile
+  echo "Installing packages from Brewfile..."
+  brew bundle install --file="$BREWFILE"
+}
+
+cleanup_unsynced() {
+  check_brewfile
+  echo "Removing packages not in Brewfile..."
+  brew bundle cleanup --force --file="$BREWFILE"
+}
+
+update_brewfile() {
+  echo "Updating Brewfile with currently installed packages..."
+  brew bundle dump --force --file="$BREWFILE"
+  echo "✓ Brewfile updated at $BREWFILE"
 }
 
 if [ "$input" = "install" ]; then
-  echo "Installing all packages..."
-  install_from_list
-  echo "All packages on the list have been processed."
+  echo "Installing all packages from Brewfile..."
+  install_from_brewfile
+  echo "✓ All packages have been installed."
   exit 0
 
 elif [ "$input" = "sync" ]; then
-  echo "Syncing packages..."
-  install_from_list
-  remove_unsynced_package
-
-  echo "Sync complete! (Installed new packages, removed old ones)"
+  echo "Syncing packages with Brewfile..."
+  install_from_brewfile
+  echo ""
+  cleanup_unsynced
+  echo ""
+  echo "✓ Sync complete! (Installed new packages, removed unlisted ones)"
   exit 0
 
-elif [ "$input" = "u_list" ]; then
-  echo "Updating package lists..."
-  brew leaves >"$SCRIPT_DIR/brew_formulas"
-  brew ls --cask >"$SCRIPT_DIR/brew_casks"
+elif [ "$input" = "update" ]; then
+  update_brewfile
+  exit 0
 
-  echo "All packages are synced"
+elif [ "$input" = "cleanup" ]; then
+  echo "Cleaning up packages not in Brewfile..."
+  cleanup_unsynced
+  echo "✓ Cleanup complete!"
   exit 0
 
 else
-  echo "Error: Invalid argument. Use 'install', 'sync', or 'u_list'."
+  echo "Error: Invalid argument. Use 'install', 'sync', 'update', or 'cleanup'."
   exit 1
 fi

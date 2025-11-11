@@ -65,7 +65,7 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 # Custom Completions
 # ------------------------------------------------------------------------------
 _brew_install_completions() {
-  local -a commands=("install" "sync" "u_list")
+  local -a commands=("install" "sync" "update" "cleanup")
   _describe 'sbrew commands' commands
 }
 
